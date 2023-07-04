@@ -5,8 +5,9 @@ import TextBox from './component/TextBox';
 function App() {
   return (
     <>
-    <Navbar companyName="Toodle" homeName="Home" />
-    <TextBox textboxHeading="Enter your text here" />
+      <Navbar companyName="Toodle" homeName="Home" />
+    
+      <TextBox textboxHeading="Enter your text here" clr="green" />
     </>
   );
 }

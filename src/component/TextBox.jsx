@@ -10,8 +10,13 @@ export default function TextBox(props) {
   // Here useState contain the default value of text variable.
   const [text, setText] = useState("");
 
-  const handleClick = () => {
+  const handleUpperClick = () => {
     let newText = text.toUpperCase();
+    setText(newText);
+  };
+
+  const handleLowerClick = () => {
+    let newText = text.toLowerCase();
     setText(newText);
   };
 
@@ -19,10 +24,43 @@ export default function TextBox(props) {
     setText(event.target.value);
   };
 
+  let [countVowel, vowelCountMethod] = useState(0);
+  let [countCons, countConsonantsMethod] = useState(0);
+
+  const handleVowelClick = () => {
+    countVowel = 0;
+    countCons = 0;
+    for (let i = 0; i < text.length; i++) {
+      if (
+        text[i] === "a" ||
+        text[i] === "e" ||
+        text[i] === "i" ||
+        text[i] === "o" ||
+        text[i] === "u"
+      ) {
+        countVowel++;
+      } else if (
+        text[i] === " " ||
+        text[i] === "'" ||
+        text[i] === '"' ||
+        text[i] === ","
+      ) {
+        continue;
+      } else {
+        countCons++;
+      }
+    }
+    vowelCountMethod(countVowel);
+    countConsonantsMethod(countCons);
+  };
+
   return (
     <>
       <div className="container mb-3">
         <h1>{props.textboxHeading}</h1>
+        <button className="btn btn-dark my-3">
+          Dark Mode
+        </button>
         <textarea
           className="form-control"
           id="exampleFormControlTextarea1"
@@ -30,12 +68,26 @@ export default function TextBox(props) {
           value={text}
           onChange={handleOnChange}
         ></textarea>
-        <button className="btn btn-primary" onClick={handleClick}>
+        <button className="btn btn-primary my-3" onClick={handleUpperClick}>
           Convert to upper case
+        </button>
+        <button
+          className="btn btn-success mx-2 my-3"
+          onClick={handleLowerClick}
+        >
+          Convert to Lower case
+        </button>
+        <button className="btn btn-info mx-2 my-3" onClick={handleVowelClick}>
+          Count Vowel
         </button>
       </div>
       <div className="container">
-        <p>Words {text.split(" ").length} and Characters are {text.length}</p>
+        <p>
+          Words {text.split(" ").length} and Characters are {text.length}
+        </p>
+        <p>
+          {countVowel} Vowels and {countCons} Consonants{" "}
+        </p>
       </div>
     </>
   );
